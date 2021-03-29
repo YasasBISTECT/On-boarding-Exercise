@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace On_boarding_API.Models
 {
-    public interface IBillingAddressRepository
+   public interface IBillingAddressRepository
     {
         Task<IEnumerable<BillingAddress>> GetBillingAddresses();
         Task<BillingAddress> GetBillingAdress(int billingId);

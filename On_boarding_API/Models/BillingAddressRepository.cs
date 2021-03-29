@@ -8,7 +8,6 @@ namespace On_boarding_API.Models
 {
     public class BillingAddressRepository : IBillingAddressRepository
     {
-
         private readonly AppDBContext appDBContext;
 
         public BillingAddressRepository(AppDBContext appDBContext)
@@ -18,9 +17,9 @@ namespace On_boarding_API.Models
 
         public async Task<BillingAddress> AddBillingAddress(BillingAddress billingAddress)
         {
-          var result = await  appDBContext.BillingAddresse.AddAsync(billingAddress);
-          await appDBContext.SaveChangesAsync();
-          return result.Entity;
+            var result = await appDBContext.BillingAddress.AddAsync(billingAddress);
+            await appDBContext.SaveChangesAsync();
+            return result.Entity;
         }
 
         public void DeleteBillingAddress(int billingId)
@@ -30,13 +29,12 @@ namespace On_boarding_API.Models
 
         public async Task<IEnumerable<BillingAddress>> GetBillingAddresses()
         {
-            return await appDBContext.BillingAddresse.ToListAsync();
+            return await appDBContext.BillingAddress.ToListAsync();
         }
 
-        public  async Task<BillingAddress> GetBillingAdress(int billingId)
+        public async Task<BillingAddress> GetBillingAdress(int billingId)
         {
-            return await appDBContext.BillingAddresse.FirstOrDefaultAsync(e => e.BillingID == billingId);
-
+            return await appDBContext.BillingAddress.FirstOrDefaultAsync(e => e.BillingID == billingId);
         }
 
         public Task<BillingAddress> UpdateBillingAddress(BillingAddress billingAddress)

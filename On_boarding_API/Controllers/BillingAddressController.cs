@@ -10,22 +10,21 @@ namespace On_boarding_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BillingAddressControler : ControllerBase
+    public class BillingAddressController : ControllerBase
     {
+        private readonly IBillingAddressRepository billingAddressRepository;
 
-        private readonly IBillingAddressRepository billingRepository;
-
-        public BillingAddressControler(IBillingAddressRepository billingAddressRepository)
+        public BillingAddressController(IBillingAddressRepository billingAddressRepository)
         {
-            this.billingRepository = billingAddressRepository;
+            this.billingAddressRepository = billingAddressRepository;
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetBillingAdress()
+        public async Task<ActionResult> GetBillingAddresses()
         {
             try
             {
-                return Ok(await billingRepository.GetBillingAddresses());
+               return Ok(await billingAddressRepository.GetBillingAddresses());
             }
             catch (Exception e)
             {
@@ -35,13 +34,13 @@ namespace On_boarding_API.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<BillingAddress>> GetBillingAddressById(int billingAddressId)
+        public async Task<ActionResult<BillingAddress>> GetBillingAddress(int id)
         {
             try
             {
-                var result = await billingRepository.GetBillingAdress(billingAddressId);
+                var result = await billingAddressRepository.GetBillingAdress(id);
 
-                if(result == null)
+                if (result == null)
                 {
                     return NotFound();
                 }
@@ -51,13 +50,12 @@ namespace On_boarding_API.Controllers
             catch (Exception e)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                        "Error retreving data from the database \n " + e);
+                    "Error retreving data from the database \n " + e);
             }
-
         }
 
         [HttpPost]
-        public async Task<ActionResult<BillingAddress>> CreateBillingAddress(BillingAddress billingAddress)
+        public async Task<ActionResult<BillingAddress>> CreaterBillingAddress(BillingAddress billingAddress)
         {
             try
             {
@@ -66,16 +64,16 @@ namespace On_boarding_API.Controllers
                     return BadRequest();
                 }
 
-                var createBillingAddress = await billingRepository.AddBillingAddress(billingAddress);
+                var createBillingAddress = await billingAddressRepository.AddBillingAddress(billingAddress);
 
-                return CreatedAtAction(nameof(GetBillingAddressById), new { id = createBillingAddress.BillingID });
+                return CreatedAtAction(nameof(GetBillingAddress), new { id = createBillingAddress.BillingID }, createBillingAddress);
+               
             }
             catch (Exception e)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                                   "Error retreving data from the database \n " + e);
+                    "Error retreving data from the database \n " + e);
             }
-        } 
-
+        }
     }
 }

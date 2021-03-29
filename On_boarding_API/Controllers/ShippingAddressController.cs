@@ -8,40 +8,39 @@ using System.Threading.Tasks;
 
 namespace On_boarding_API.Controllers
 {
-    // remove exeption 'e'. It' only for development 
-
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountInfoController : ControllerBase
+    public class ShippingAddressController : ControllerBase
     {
-        private readonly IAccountInfoRepository accountRepository;
-        public AccountInfoController(IAccountInfoRepository accountInfoRepository)
+        private readonly IShippingAddressRepository shippingAddressRepository;
+
+        public ShippingAddressController(IShippingAddressRepository shippingAddressRepository)
         {
-            this.accountRepository = accountInfoRepository;
+            this.shippingAddressRepository = shippingAddressRepository;
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAccountInfo()
+        public async Task<ActionResult> GetShippingAddresses()
         {
             try
             {
-                return Ok(await accountRepository.GetAccountInfos());
+                return Ok(await shippingAddressRepository.GetShippingAddresses());
             }
             catch (Exception e)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Error retreving data from the database \n " + e);
+                "Error retreving data from the database \n " + e);
             }
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<AccountInfo>> GetAccountInfo(int id)
+        public async Task<ActionResult<ShippingAddress>> GetShippingAdress(int id)
         {
             try
             {
-                var result = await accountRepository.GetAccountInfo(id);
+                var result = await shippingAddressRepository.GetShippingAddress(id);
 
-                if(result == null)
+                if (result == null)
                 {
                     return NotFound();
                 }
@@ -49,24 +48,24 @@ namespace On_boarding_API.Controllers
                 return result;
             }
             catch (Exception e)
-            {              
+            {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Error retreving data from the database \n " + e);
+                 "Error retreving data from the database \n " + e);
             }
         }
 
         [HttpPost]
-        public async Task<ActionResult<AccountInfo>> CreateAccountInfo(AccountInfo accountInfo)
+        public async Task<ActionResult<AccountInfo>> CreateShippingAddress(ShippingAddress shippingAddress)
         {
             try
             {
-                if (accountInfo == null)
+                if (shippingAddress == null)
                 {
                     return BadRequest();
                 }
 
-               var createAccountInfo = await accountRepository.AddAccountInfo(accountInfo);
-               return CreatedAtAction(nameof(GetAccountInfo), new { id = createAccountInfo.CustRegistrationId });
+                var createShippingAdress = await shippingAddressRepository.AddShippingAddress(shippingAddress);
+                return CreatedAtAction(nameof(GetShippingAddresses), new { id = createShippingAdress.ShippingId });
             }
             catch (Exception e)
             {
@@ -75,6 +74,7 @@ namespace On_boarding_API.Controllers
                    "Error retreving data from the database \n " + e);
             }
         }
+
 
     }
 }

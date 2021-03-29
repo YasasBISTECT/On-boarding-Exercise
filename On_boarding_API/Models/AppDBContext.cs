@@ -14,8 +14,8 @@ namespace On_boarding_API.Models
         }
 
         public DbSet<AccountInfo> AccountInfo { get; set; }
-        public DbSet<BillingAddress> BillingAddresse { get; set; }
-        public DbSet<ShippingAddress> ShippingAddresse { get; set; }
+        public DbSet<BillingAddress> BillingAddress { get; set; }
+        public DbSet<ShippingAddress> ShippingAddress { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

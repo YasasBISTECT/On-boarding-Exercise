@@ -31,6 +31,7 @@ namespace On_boarding_API
 
             services.AddScoped<IAccountInfoRepository, AccountInfoRepository>();
             services.AddScoped<IBillingAddressRepository, BillingAddressRepository>();
+            services.AddScoped<IShippingAddressRepository, ShippingAddressRepository>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
