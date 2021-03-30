@@ -27,8 +27,8 @@ namespace On_boarding_API.Models
                 entity.ToTable("Account_Info");
 
                 entity.Property(e => e.CustRegistrationId)
-                .HasColumnName("custRegistrationId");
-                   
+                .HasColumnName("custRegistrationId")
+                .ValueGeneratedOnAdd();
 
                 //.UseSqlServerIdentityColumn();
                 // .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);

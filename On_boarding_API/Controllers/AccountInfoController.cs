@@ -65,8 +65,9 @@ namespace On_boarding_API.Controllers
                     return BadRequest();
                 }
 
-               var createAccountInfo = await accountRepository.AddAccountInfo(accountInfo);
-               return CreatedAtAction(nameof(GetAccountInfo), new { id = createAccountInfo.CustRegistrationId });
+                var createAccountInfo = await accountRepository.AddAccountInfo(accountInfo);
+                return CreatedAtAction(nameof(GetAccountInfo), new { id = createAccountInfo.CustRegistrationId }, createAccountInfo);
+
             }
             catch (Exception e)
             {
