@@ -12,23 +12,20 @@ namespace On_boarding_API.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key, Column(Order = 0)]
         public int CustRegistrationId { get; set; }
-       // [Key, Column(Order = 1)]
-        public string ContactPerson { get; set; }
-      //  [Key, Column(Order = 3)]
-        public string BusinessName { get; set; }
-      //  [Key, Column(Order = 4)]
+        [MinLength(3)]
+        public string ContactPerson { get; set; }     
+        public string BusinessName { get; set; }      
         public int ContactNumber { get; set; }
-       // [Key, Column(Order = 5)]
-        public string StreetAddress1 { get; set; }
-       // [Key, Column(Order = 6)]
+        [Required]
+        public string StreetAddress1 { get; set; }      
         public string StreetAddress2 { get; set; }
-      //  [Key, Column(Order = 7)]
+        [Required]
         public string City { get; set; }
-      //  [Key, Column(Order = 8)]
+        [Required]
         public string District { get; set; }
-      //  [Key, Column(Order = 9)]
+        [Required]
         public string Email { get; set; }
-       // [Key, Column(Order = 10)]
+        [Required]
         public DateTime StratDate { get; set; }
 
     }

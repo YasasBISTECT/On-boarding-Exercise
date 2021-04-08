@@ -91,8 +91,8 @@ namespace On_boarding_API.Models
                 entity.ToTable("Billing_Address");
 
                 entity.Property(e => e.BillingID)
-                    .HasColumnName("billingID")
-                    .ValueGeneratedNever();
+                    .HasColumnName("billingID");
+                    
 
                 entity.Property(e => e.CustRegistrationId)
                     .HasColumnName("custRegistrationId")
@@ -129,8 +129,8 @@ namespace On_boarding_API.Models
                 entity.ToTable("Shipping_Address");
 
                 entity.Property(e => e.ShippingId)
-                    .HasColumnName("shippingId")
-                    .ValueGeneratedNever();
+                    .HasColumnName("shippingId");
+                   
 
                 entity.Property(e => e.CustRegistrationId)
                     .HasColumnName("custRegistrationId")

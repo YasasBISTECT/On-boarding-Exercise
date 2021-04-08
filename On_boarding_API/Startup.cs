@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using On_boarding_API.Models;
+using Newtonsoft.Json.Serialization;
+
 
 namespace On_boarding_API
 {
@@ -26,6 +28,22 @@ namespace On_boarding_API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                    builder =>
+                    {
+                        builder
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials();
+                    });
+
+            });
+
+           
             var DBConnection = Configuration.GetConnectionString("DBConnectoin");
             services.AddDbContext<AppDBContext>(options => options.UseSqlServer(DBConnection));
 
@@ -34,6 +52,7 @@ namespace On_boarding_API
             services.AddScoped<IShippingAddressRepository, ShippingAddressRepository>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +64,20 @@ namespace On_boarding_API
             }
 
             app.UseMvc();
+
+            app.UseHttpsRedirection();
+
+           // app.UseRouting();
+
+            app.UseCors("CorsPolicy");
+
+            //app.UseAuthorization();
+
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapControllers();
+            //});
+            app.UseCors("AllowAll");
         }
     }
 }

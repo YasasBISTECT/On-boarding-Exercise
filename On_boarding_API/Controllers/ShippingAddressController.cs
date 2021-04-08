@@ -63,7 +63,7 @@ namespace On_boarding_API.Controllers
                 {
                     return BadRequest();
                 }
-
+                shippingAddress.CustRegistrationId = 25;
                 var createShippingAdress = await shippingAddressRepository.AddShippingAddress(shippingAddress);
                 return CreatedAtAction(nameof(GetShippingAddresses), new { id = createShippingAdress.ShippingId });
             }

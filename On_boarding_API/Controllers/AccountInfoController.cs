@@ -13,13 +13,14 @@ namespace On_boarding_API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class AccountInfoController : ControllerBase
-    {
+    {      
+
         private readonly IAccountInfoRepository accountRepository;
         public AccountInfoController(IAccountInfoRepository accountInfoRepository)
         {
             this.accountRepository = accountInfoRepository;
-        }
-
+        }      
+       
         [HttpGet]
         public async Task<ActionResult> GetAccountInfo()
         {
@@ -58,6 +59,7 @@ namespace On_boarding_API.Controllers
         [HttpPost]
         public async Task<ActionResult<AccountInfo>> CreateAccountInfo(AccountInfo accountInfo)
         {
+           
             try
             {
                 if (accountInfo == null)
@@ -65,9 +67,10 @@ namespace On_boarding_API.Controllers
                     return BadRequest();
                 }
 
-                var createAccountInfo = await accountRepository.AddAccountInfo(accountInfo);
+              
+                var createAccountInfo = await accountRepository.AddAccountInfo(accountInfo);               
                 return CreatedAtAction(nameof(GetAccountInfo), new { id = createAccountInfo.CustRegistrationId }, createAccountInfo);
-
+                
             }
             catch (Exception e)
             {
@@ -76,6 +79,13 @@ namespace On_boarding_API.Controllers
                    "Error retreving data from the database \n " + e);
             }
         }
+
+        //public int getCustRegistrationID()
+        //{
+        //    get{
+        //        return this.tempCustID;
+        //    }
+        //}
 
     }
 }

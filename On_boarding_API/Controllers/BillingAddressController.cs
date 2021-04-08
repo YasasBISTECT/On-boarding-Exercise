@@ -12,8 +12,11 @@ namespace On_boarding_API.Controllers
     [ApiController]
     public class BillingAddressController : ControllerBase
     {
-        private readonly IBillingAddressRepository billingAddressRepository;
+        //private static int tempCustID;
+       
 
+        private readonly IBillingAddressRepository billingAddressRepository;
+        
         public BillingAddressController(IBillingAddressRepository billingAddressRepository)
         {
             this.billingAddressRepository = billingAddressRepository;
@@ -31,6 +34,7 @@ namespace On_boarding_API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError,
                     "Error retreving data from the database \n " + e);
             }
+           
         }
 
         [HttpGet("{id:int}")]
@@ -56,7 +60,8 @@ namespace On_boarding_API.Controllers
 
         [HttpPost]
         public async Task<ActionResult<BillingAddress>> CreaterBillingAddress(BillingAddress billingAddress)
-        {
+        {   
+
             try
             {
                 if (billingAddress == null)
@@ -64,8 +69,9 @@ namespace On_boarding_API.Controllers
                     return BadRequest();
                 }
 
+                //billingAddress.CustRegistrationId = Convert.ToInt32(custID);
+                billingAddress.CustRegistrationId = 26;
                 var createBillingAddress = await billingAddressRepository.AddBillingAddress(billingAddress);
-
                 return CreatedAtAction(nameof(GetBillingAddress), new { id = createBillingAddress.BillingID }, createBillingAddress);
                
             }
