@@ -12,6 +12,7 @@ namespace On_boarding_API.Controllers
     [ApiController]
     public class ShippingAddressController : ControllerBase
     {
+        private readonly IAccountInfoRepository accountRepository;
         private readonly IShippingAddressRepository shippingAddressRepository;
 
         public ShippingAddressController(IShippingAddressRepository shippingAddressRepository)
@@ -63,7 +64,10 @@ namespace On_boarding_API.Controllers
                 {
                     return BadRequest();
                 }
-                shippingAddress.CustRegistrationId = 25;
+
+                AccountInfoController ff = new AccountInfoController(accountRepository);
+
+                shippingAddress.CustRegistrationId = ff.getCustRegId();
                 var createShippingAdress = await shippingAddressRepository.AddShippingAddress(shippingAddress);
                 return CreatedAtAction(nameof(GetShippingAddresses), new { id = createShippingAdress.ShippingId });
             }

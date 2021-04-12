@@ -13,8 +13,8 @@ namespace On_boarding_API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class AccountInfoController : ControllerBase
-    {      
-
+    {
+        public static int getCustID;
         private readonly IAccountInfoRepository accountRepository;
         public AccountInfoController(IAccountInfoRepository accountInfoRepository)
         {
@@ -67,8 +67,11 @@ namespace On_boarding_API.Controllers
                     return BadRequest();
                 }
 
+                
+
               
-                var createAccountInfo = await accountRepository.AddAccountInfo(accountInfo);               
+                var createAccountInfo = await accountRepository.AddAccountInfo(accountInfo);
+                getCustID = accountInfo.CustRegistrationId;
                 return CreatedAtAction(nameof(GetAccountInfo), new { id = createAccountInfo.CustRegistrationId }, createAccountInfo);
                 
             }
@@ -80,12 +83,20 @@ namespace On_boarding_API.Controllers
             }
         }
 
-        //public int getCustRegistrationID()
+        //public int getCustRegId { get; set; }
+
+        public int getCustRegId()
+        {
+            return getCustID;
+        }
+
+        //public void ss(int s)
         //{
-        //    get{
-        //        return this.tempCustID;
-        //    }
+        //    getCustID = s;
         //}
+
+
+
 
     }
 }

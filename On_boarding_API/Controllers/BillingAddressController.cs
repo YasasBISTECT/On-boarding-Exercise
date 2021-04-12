@@ -13,8 +13,8 @@ namespace On_boarding_API.Controllers
     public class BillingAddressController : ControllerBase
     {
         //private static int tempCustID;
-       
 
+        private readonly IAccountInfoRepository accountRepository;
         private readonly IBillingAddressRepository billingAddressRepository;
         
         public BillingAddressController(IBillingAddressRepository billingAddressRepository)
@@ -60,7 +60,7 @@ namespace On_boarding_API.Controllers
 
         [HttpPost]
         public async Task<ActionResult<BillingAddress>> CreaterBillingAddress(BillingAddress billingAddress)
-        {   
+        {           
 
             try
             {
@@ -69,8 +69,10 @@ namespace On_boarding_API.Controllers
                     return BadRequest();
                 }
 
+                AccountInfoController ff = new AccountInfoController(accountRepository);
+
                 //billingAddress.CustRegistrationId = Convert.ToInt32(custID);
-                billingAddress.CustRegistrationId = 26;
+                billingAddress.CustRegistrationId = ff.getCustRegId();                
                 var createBillingAddress = await billingAddressRepository.AddBillingAddress(billingAddress);
                 return CreatedAtAction(nameof(GetBillingAddress), new { id = createBillingAddress.BillingID }, createBillingAddress);
                
