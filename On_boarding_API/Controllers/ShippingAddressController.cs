@@ -64,10 +64,10 @@ namespace On_boarding_API.Controllers
                 {
                     return BadRequest();
                 }
-
-                AccountInfoController ff = new AccountInfoController(accountRepository);
-
-                shippingAddress.CustRegistrationId = ff.getCustRegId();
+                // create a object of account info
+                AccountInfoController accountInfoObj = new AccountInfoController(accountRepository);
+                //get the account info custRegistrationId and assign that value to the shippingAddress foreing key custRegistrationId
+                shippingAddress.CustRegistrationId = accountInfoObj.getCustRegId();
                 var createShippingAdress = await shippingAddressRepository.AddShippingAddress(shippingAddress);
                 return CreatedAtAction(nameof(GetShippingAddresses), new { id = createShippingAdress.ShippingId });
             }

@@ -60,8 +60,7 @@ namespace On_boarding_API.Controllers
 
         [HttpPost]
         public async Task<ActionResult<BillingAddress>> CreaterBillingAddress(BillingAddress billingAddress)
-        {           
-
+        {
             try
             {
                 if (billingAddress == null)
@@ -69,10 +68,10 @@ namespace On_boarding_API.Controllers
                     return BadRequest();
                 }
 
-                AccountInfoController ff = new AccountInfoController(accountRepository);
-
-                //billingAddress.CustRegistrationId = Convert.ToInt32(custID);
-                billingAddress.CustRegistrationId = ff.getCustRegId();                
+                // create a object of account info
+                AccountInfoController accountInfoObj = new AccountInfoController(accountRepository);
+                //get the account info custRegistrationId and assign that value to the billingAddress foreing key custRegistrationId
+                billingAddress.CustRegistrationId = accountInfoObj.getCustRegId();                
                 var createBillingAddress = await billingAddressRepository.AddBillingAddress(billingAddress);
                 return CreatedAtAction(nameof(GetBillingAddress), new { id = createBillingAddress.BillingID }, createBillingAddress);
                

@@ -14,6 +14,7 @@ namespace On_boarding_API.Models
         {
             this.appDBContext = appDBContext;
         }
+        //Post method data saving
         public async Task<ShippingAddress> AddShippingAddress(ShippingAddress shippingAddress)
         {
             var result = await appDBContext.ShippingAddress.AddAsync(shippingAddress);
@@ -25,12 +26,12 @@ namespace On_boarding_API.Models
         {
             throw new NotImplementedException();
         }
-
+        //Get with id method
         public async Task<ShippingAddress> GetShippingAddress(int shippingId)
         {
           return await appDBContext.ShippingAddress.FirstOrDefaultAsync(e =>e.ShippingId == shippingId);
         }
-
+        //Get method as a list
         public async Task<IEnumerable<ShippingAddress>> GetShippingAddresses()
         {
             return await appDBContext.ShippingAddress.ToListAsync();
