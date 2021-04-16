@@ -58,8 +58,7 @@ namespace On_boarding_API.Controllers
 
         [HttpPost]
         public async Task<ActionResult<AccountInfo>> CreateAccountInfo(AccountInfo accountInfo)
-        {
-           
+        {           
             try
             {
                 if (accountInfo == null)
@@ -67,10 +66,8 @@ namespace On_boarding_API.Controllers
                     return BadRequest();
                 }
 
-                
-
-              
                 var createAccountInfo = await accountRepository.AddAccountInfo(accountInfo);
+                // capture the custRegistrationId 
                 getCustID = accountInfo.CustRegistrationId;
                 return CreatedAtAction(nameof(GetAccountInfo), new { id = createAccountInfo.CustRegistrationId }, createAccountInfo);
                 
@@ -83,20 +80,11 @@ namespace On_boarding_API.Controllers
             }
         }
 
-        //public int getCustRegId { get; set; }
-
+        // get method used to store account info custRegistrationId accross with biling and shipping 
         public int getCustRegId()
         {
             return getCustID;
         }
-
-        //public void ss(int s)
-        //{
-        //    getCustID = s;
-        //}
-
-
-
 
     }
 }
